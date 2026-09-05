@@ -89,6 +89,8 @@ cask "stats"
 cask "slack"
 cask "microsoft-teams"
 cask "microsoft-outlook"
+cask "aws-vpn-client"
+cask "wireshark-app"
 
 cask "google-chrome"
 cask "whatsapp"
