@@ -2,53 +2,25 @@
   <img src="assets/mac-setup-logo.png" alt="mac-setup logo" width="320">
 </p>
 
-# mac-setup — Personal macOS workstation configuration
+# mac-setup
 
-One-time setup for my development and DevOps environment using Homebrew, dotfiles, and macOS defaults.
+My personal macOS bootstrap script for setting up an Apple Silicon development workstation.
 
-## New Apple Silicon Mac
+## What it does
 
-Finish macOS Setup Assistant, install system updates, and complete company enrollment first if this is a work Mac.
+- Installs command-line tools and applications from `Brewfile`.
+- Links tracked dotfiles and backs up existing targets.
+- Applies macOS preferences.
+- Configures Chrome bookmarks and extensions, and installs VSCodium extensions.
 
-Install Xcode Command Line Tools:
+## Usage
+
+Requires Xcode Command Line Tools and Homebrew. Review and customize `Brewfile`, `setup.sh`, and `macos/defaults.sh` before running.
 
 ```bash
-xcode-select --install
-```
-
-Wait for the installer to finish, then run:
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
 git clone https://github.com/mstrugarevic1/mac-setup.git ~/.mac-setup
 cd ~/.mac-setup
 ./setup.sh
 ```
 
-Run the setup as your normal user, not with `sudo`. Start a new login shell when it finishes.
-
-## What the script does
-
-- installs formulae, applications, and selected VSCodium extensions;
-- offers selected Chrome Web Store extensions for approval on the next Chrome launch;
-- prepares the Work bookmarks folder from `chrome/bookmarks.html` for Chrome's first launch, preserving existing initial preferences;
-- installs a pinned revision of the `ai-cli-wrapper` safety functions;
-- links the tracked Zsh, Git, SSH, Vim, Helix, tmux, and Kitty configuration;
-- creates machine-local override files only when they do not exist;
-- asks for missing Git identity values;
-- applies the settings in `macos/defaults.sh`.
-
-Existing config files are backed up before they are replaced with symlinks. The script is safe to rerun. Command output and password prompts remain visible; any failed Brewfile dependency stops the run so the cause can be fixed before rerunning.
-
-On a fresh Mac, Homebrew installs the currently available versions. Reruns preserve installed versions because setup does not upgrade existing dependencies. This Brewfile is not a version-locked snapshot.
-
-If Chrome has already been used, import `chrome/bookmarks.html` through
-Bookmark Manager → ⋮ → Import bookmarks. Automatic import requires setup
-to finish before Chrome's first launch; keep the repository in place until then.
-
-## Machine-local configuration
-
-Use the `.local` files created under `~` for settings that apply only to this Mac. The setup creates missing local files once and never overwrites them.
-
-Credentials do not belong in this repository. Keep SSH private keys, AWS credentials, kubeconfigs, tokens, certificates, VPN configuration, passwords, and `.env` files local. Application sign-ins and company access remain manual.
+Run the script as your normal user, not with `sudo`. It is intended for Apple Silicon Macs.
