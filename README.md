@@ -20,12 +20,8 @@ Wait for the installer to finish, then run:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
 
-brew install gh
-gh auth login
-
-gh repo clone mstrugarevic1/mac-setup ~/.mac-setup
+git clone https://github.com/mstrugarevic1/mac-setup.git ~/.mac-setup
 cd ~/.mac-setup
 ./setup.sh
 ```
