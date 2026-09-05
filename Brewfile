@@ -41,6 +41,13 @@ brew "kind"
 brew "kubeconform"
 brew "istioctl"
 brew "stern"
+brew "lazygit"
+brew "git-delta"
+brew "krew"
+brew "direnv"
+brew "sops"
+brew "age"
+brew "trivy"
 
 # Cloud, infrastructure-as-code, policy, documentation, and secrets tooling.
 brew "awscli"
@@ -50,6 +57,10 @@ brew "opentofu"
 brew "terraform-docs"
 brew "hashicorp/tap/vault", trusted: true
 brew "kcat"
+brew "kustomize"
+brew "eksctl"
+brew "aws-vault"
+brew "aws-sso-util"
 
 # Python runtime/package management and repository quality checks.
 brew "python"
@@ -74,7 +85,7 @@ cask "brave-browser"
 cask "dbeaver-community"
 cask "lulu"
 cask "rancher"
-
+cask "stats"
 cask "slack"
 cask "microsoft-teams"
 cask "microsoft-outlook"
