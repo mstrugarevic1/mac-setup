@@ -1,4 +1,15 @@
-# Finder metadata, Vim swap files, and common editor backup files.
+# macOS
 .DS_Store
+._*
+.AppleDouble
+.LSOverride
+
+# Editors
 *.swp
+*.swo
 *~
+
+# Local environment
+.env
+.env.local
+.direnv/
