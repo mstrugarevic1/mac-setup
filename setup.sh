@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Configure a macOS workstation by installing applications, linking dotfiles, and applying system preferences.
 # Apple ships Bash 3.2, so keep this script compatible with it.
 set -euo pipefail
 
