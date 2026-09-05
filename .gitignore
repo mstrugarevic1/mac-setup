@@ -1,0 +1,13 @@
+# macOS metadata.
+.DS_Store
+
+# Machine-local configuration and environment files.
+*.local
+.env
+.env.*
+
+# Never track a directory intended for secrets.
+secrets/
+
+# Local Codex notes are intentionally never committed.
+lessons_learned.md

@@ -1,0 +1,2 @@
+# setup.sh copies this once to ~/.zshrc.local. Keep machine-specific values there.
+# export WORKSPACE="$HOME/work"

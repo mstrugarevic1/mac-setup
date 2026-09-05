@@ -1,0 +1,23 @@
+# Name the first branch in every new repository "main".
+[init]
+    defaultBranch = main
+
+# Delete stale remote-tracking branches during fetch.
+[fetch]
+    prune = true
+
+# Preserve merge-based pulls instead of implicitly rebasing local commits.
+[pull]
+    rebase = false
+
+# Apply the tracked global ignore patterns to every repository.
+[core]
+    excludesfile = ~/.gitignore_global
+
+# Load the untracked, machine-local Git identity created by setup.sh.
+[include]
+    path = ~/.gitconfig.local
+
+# To use a separate work identity later:
+# [includeIf "gitdir:~/work/"]
+#     path = ~/.gitconfig.work

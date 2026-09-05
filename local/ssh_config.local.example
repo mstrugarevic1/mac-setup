@@ -1,0 +1,5 @@
+# Machine-specific SSH hosts belong here. Never store private keys in this repository.
+# Host example
+#     HostName example.com
+#     User YOUR_USERNAME
+#     IdentityFile ~/.ssh/id_ed25519_example

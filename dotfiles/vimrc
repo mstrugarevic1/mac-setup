@@ -1,0 +1,40 @@
+" Plugin-free Vim defaults for configuration and infrastructure files.
+set nocompatible
+syntax enable
+filetype indent on
+
+set number
+set cursorline
+" Always show a small native status line: file state on the left, position on the right.
+set laststatus=2
+set statusline=%<%f\ %m%r
+set statusline+=%=
+set statusline+=%y\ %l:%c\ %p%%
+set ignorecase
+set smartcase
+set incsearch
+set backspace=indent,eol,start
+
+if exists('+termguicolors')
+    set termguicolors
+endif
+
+set autoindent
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+augroup workstation_filetypes
+    autocmd!
+    autocmd BufRead,BufNewFile *.tf,*.tfvars setfiletype terraform
+    autocmd BufRead,BufNewFile *.hcl setfiletype hcl
+    autocmd FileType yaml,json,terraform,hcl setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+
+colorscheme workstation
+
+" Load machine-specific settings after the tracked defaults.
+if filereadable(expand('~/.vimrc.local'))
+    source ~/.vimrc.local
+endif

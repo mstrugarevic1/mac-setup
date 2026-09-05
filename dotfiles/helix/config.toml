@@ -1,0 +1,45 @@
+theme = "adwaita-dark"
+
+[editor]
+line-number = "absolute"
+cursorline = true
+bufferline = "multiple"
+completion-timeout = 100
+scrolloff = 8
+popup-border = "none"
+color-modes = true
+
+[editor.cursor-shape]
+normal = "block"
+insert = "block"
+select = "block"
+
+[editor.indent-guides]
+render = true
+character = "┊"
+skip-levels = 1
+
+[editor.file-picker]
+hidden = false
+
+# Keep file and Git context together; put diagnostics and cursor details on the right.
+[editor.statusline]
+left = [
+  "mode",
+  "separator",
+  "file-name",
+  "file-modification-indicator",
+  "separator",
+  "version-control",
+]
+right = [
+  "diagnostics",
+  "separator",
+  "position",
+  "separator",
+  "file-type",
+]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"

@@ -1,0 +1,11 @@
+# Load machine-specific host blocks first because OpenSSH uses the first value found.
+Include ~/.ssh/config.local
+
+# Defaults for every SSH destination; earlier host-specific blocks can specialize them.
+Host *
+    # Register loaded keys with the macOS ssh-agent and Keychain.
+    AddKeysToAgent yes
+    UseKeychain yes
+    # Detect a dead connection after three unanswered 60-second keepalives.
+    ServerAliveInterval 60
+    ServerAliveCountMax 3

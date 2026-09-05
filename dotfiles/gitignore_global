@@ -1,0 +1,4 @@
+# Finder metadata, Vim swap files, and common editor backup files.
+.DS_Store
+*.swp
+*~

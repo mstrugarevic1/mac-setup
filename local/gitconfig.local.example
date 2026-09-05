@@ -1,0 +1,4 @@
+# setup.sh creates ~/.gitconfig.local from the identity entered during setup.
+[user]
+    name = YOUR_NAME
+    email = YOUR_EMAIL

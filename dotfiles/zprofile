@@ -1,0 +1,18 @@
+# Login shells load this file before zshrc. Homebrew: Apple Silicon first, then Intel.
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    # shellenv exports Homebrew's bin, manpage, and installation paths.
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# Zsh's unique array flag prevents duplicate PATH entries.
+typeset -U path PATH
+if command -v brew >/dev/null 2>&1; then
+    # Homebrew does not link keg-only database clients into its main bin directory.
+    for formula in mysql-client@8.0 libpq; do
+        formula_prefix="$(brew --prefix "$formula" 2>/dev/null)" || continue
+        path=("$formula_prefix/bin" $path)
+    done
+    unset formula formula_prefix
+fi
