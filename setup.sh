@@ -133,6 +133,18 @@ printf '→ Homebrew packages and applications\n'
 brew bundle --no-upgrade --file "$REPO_DIR/Brewfile"
 printf '✓ Homebrew packages and applications\n'
 
+# Chrome reads initial preferences only on its first run.
+printf '→ Chrome bookmarks for first launch\n'
+chrome_preferences_temp="$(mktemp)"
+jq -n --arg bookmarks "$REPO_DIR/chrome/bookmarks.html" \
+    '{distribution: {import_bookmarks: false, import_bookmarks_from_file: $bookmarks}}' \
+    > "$chrome_preferences_temp"
+create_local_file "$chrome_preferences_temp" \
+    "$HOME/Library/Application Support/Google/Chrome/Google Chrome Initial Preferences"
+rm -f "$chrome_preferences_temp"
+unset chrome_preferences_temp
+printf '✓ Chrome bookmark defaults prepared\n'
+
 # Offer these Chrome Web Store extensions on the next Google Chrome launch.
 # Chrome asks the user to enable them, and respects later removal through its UI.
 printf '→ Chrome extensions\n'

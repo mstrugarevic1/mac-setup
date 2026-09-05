@@ -36,6 +36,7 @@ Run the setup as your normal user, not with `sudo`. Start a new login shell when
 
 - installs formulae, applications, and selected VSCodium extensions;
 - offers selected Chrome Web Store extensions for approval on the next Chrome launch;
+- prepares the Work bookmarks folder from `chrome/bookmarks.html` for Chrome's first launch, preserving existing initial preferences;
 - installs a pinned revision of the `ai-cli-wrapper` safety functions;
 - links the tracked Zsh, Git, SSH, Vim, Helix, tmux, and Kitty configuration;
 - creates machine-local override files only when they do not exist;
@@ -45,6 +46,10 @@ Run the setup as your normal user, not with `sudo`. Start a new login shell when
 Existing config files are backed up before they are replaced with symlinks. The script is safe to rerun. Command output and password prompts remain visible; any failed Brewfile dependency stops the run so the cause can be fixed before rerunning.
 
 On a fresh Mac, Homebrew installs the currently available versions. Reruns preserve installed versions because setup does not upgrade existing dependencies. This Brewfile is not a version-locked snapshot.
+
+If Chrome has already been used, import `chrome/bookmarks.html` through
+Bookmark Manager → ⋮ → Import bookmarks. Automatic import requires setup
+to finish before Chrome's first launch; keep the repository in place until then.
 
 ## Machine-local configuration
 
