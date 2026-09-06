@@ -17,6 +17,21 @@ My personal macOS bootstrap script for setting up an Apple Silicon development w
 
 Requires Xcode Command Line Tools and Homebrew. Review and customize `Brewfile`, `setup.sh`, and `macos/defaults.sh` before running.
 
+Install Xcode Command Line Tools:
+
+```bash
+xcode-select --install
+```
+
+After the installation finishes, install Homebrew:
+
+```bash
+/bin/bash -c "$(curl -fsSL \
+  https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Then clone the repository and run the setup script:
+
 ```bash
 git clone https://github.com/mstrugarevic1/mac-setup.git ~/.mac-setup
 cd ~/.mac-setup
