@@ -78,6 +78,7 @@ brew "redis"
 # Desktop applications. Authentication remains manual.
 cask "terraform-linters/tap/tflint", trusted: true
 cask "codex"
+cask "font-jetbrains-mono"
 cask "kitty"
 cask "bitwarden"
 cask "keepassxc"

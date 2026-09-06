@@ -7,6 +7,7 @@ export VISUAL=vim
 # Include executables installed directly for the current user without duplicating PATH entries.
 typeset -U path PATH
 path=("$HOME/.local/bin" $path)
+[[ -d "$HOME/.rd/bin" ]] && path=("$HOME/.rd/bin" $path)
 
 
 # ── History ────────────────────────────────────────────────────
@@ -15,10 +16,10 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=50000
 
-# Share history between terminal sessions and keep it compact.
-setopt APPEND_HISTORY
+# Share history between terminal sessions and remove duplicates.
 setopt SHARE_HISTORY
-setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 
@@ -68,5 +69,8 @@ PROMPT='%F{green}%n@%m%f:%F{blue}%~%f${vcs_info_msg_0_} %# '
 # Optional files must not prevent a shell from starting when they do not exist.
 [[ -f "$HOME/.aliases.zsh" ]] && source "$HOME/.aliases.zsh"
 [[ -f "$HOME/.functions.zsh" ]] && source "$HOME/.functions.zsh"
+if (( $+functions[git_folder_reminder] )); then
+    add-zsh-hook chpwd git_folder_reminder
+fi
 [[ -f "$HOME/.config/ai-cli-wrapper/scripts/ai-safe.sh" ]] && source "$HOME/.config/ai-cli-wrapper/scripts/ai-safe.sh"
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
