@@ -1,108 +1,123 @@
-# Core version-control, data-processing, download, and terminal utilities.
-brew "git"
+# Version control and shell workflow.
+brew "direnv"
 brew "gh"
-brew "jq"
-brew "yq"
-brew "wget"
-brew "watch"
+brew "git"
+brew "git-delta"
+brew "lazygit"
 
-# Terminal, editor, and file/text inspection tools.
-brew "fzf"
-brew "ripgrep"
-brew "fd"
+# Data, download, and inspection utilities.
+brew "jq"
+brew "watch"
+brew "wget"
+brew "yq"
+
+# Terminal, editor, and file navigation tools.
 brew "bat"
 brew "eza"
+brew "fd"
+brew "fzf"
+brew "helix"
 brew "htop"
-brew "zoxide"
+brew "ripgrep"
 brew "tmux"
 brew "vim"
-brew "helix"
+brew "zoxide"
 
-# Language servers used automatically by Helix for DevOps files.
-brew "bash-language-server"
-brew "yaml-language-server"
+# Language servers used by Helix.
 brew "ansible-language-server"
-brew "terraform-ls"
-brew "dockerfile-language-server"
+brew "bash-language-server"
 brew "docker-compose-langserver"
+brew "dockerfile-language-server"
 brew "helm-ls"
 brew "taplo"
+brew "terraform-ls"
 brew "vscode-langservers-extracted"
+brew "yaml-language-server"
 
-# Kubernetes and GitOps command-line clients.
-brew "kubectl"
-brew "kubecolor"
+# Kubernetes and GitOps tools.
+brew "argocd"
+brew "eksctl"
 brew "helm"
 brew "helmfile"
-brew "k9s"
-brew "kubectx"
-brew "argocd"
-brew "kind"
-brew "kubeconform"
 brew "istioctl"
-brew "stern"
-brew "lazygit"
-brew "git-delta"
+brew "k9s"
+brew "kind"
 brew "krew"
-brew "direnv"
-brew "sops"
-brew "age"
-brew "trivy"
+brew "kubecolor"
+brew "kubeconform"
+brew "kubectx"
+brew "kubectl"
+brew "kustomize"
+brew "stern"
 
-# Cloud, infrastructure-as-code, policy, documentation, and secrets tooling.
-brew "awscli"
+# Cloud and infrastructure-as-code tools.
 brew "ansible"
+brew "aws-sso-util"
+brew "aws-vault"
+brew "awscli"
 brew "hashicorp/tap/terraform", trusted: true
+brew "hashicorp/tap/vault", trusted: true
 brew "opentofu"
 brew "terraform-docs"
-brew "hashicorp/tap/vault", trusted: true
-brew "kcat"
-brew "kustomize"
-brew "eksctl"
-brew "aws-vault"
-brew "aws-sso-util"
 
-# Python runtime/package management and repository quality checks.
-brew "python"
-brew "uv"
+# Security and repository checks.
+brew "actionlint"
+brew "age"
+brew "gitleaks"
 brew "shellcheck"
 brew "shfmt"
-brew "gitleaks"
-brew "actionlint"
+brew "sops"
+brew "trivy"
 
-# Database clients. mysql-client@8.0 and libpq are keg-only; zprofile adds them to PATH.
-brew "mysql-client@8.0"
+# Language runtimes and package managers.
+brew "python"
+brew "uv"
+
+# Database and messaging clients.
+brew "kcat"
 brew "libpq"
+brew "mysql-client@8.0"
 brew "redis"
 
-# Desktop applications. Authentication remains manual.
-cask "terraform-linters/tap/tflint", trusted: true
+# Developer applications.
 cask "codex"
-cask "font-jetbrains-mono"
-cask "kitty"
-cask "bitwarden"
-cask "keepassxc"
-cask "brave-browser"
 cask "dbeaver-community"
-cask "lulu"
+cask "elasticvue"
+cask "kitty"
 cask "rancher"
-cask "stats"
-cask "slack"
-cask "microsoft-teams"
-cask "microsoft-outlook"
-cask "aws-vpn-client"
-cask "wireshark-app"
-
-cask "google-chrome"
-cask "whatsapp"
-cask "signal"
-
 cask "vscodium"
 
+# Browsers.
+cask "brave-browser"
+cask "google-chrome"
+
+# Security and networking applications.
+cask "aws-vpn-client"
+cask "bitwarden"
+cask "keepassxc"
+cask "lulu"
+cask "malwarebytes"
+cask "wireshark-app"
+
+# Communication applications.
+cask "microsoft-outlook"
+cask "microsoft-teams"
+cask "signal"
+cask "slack"
+cask "whatsapp"
+
+# System and desktop utilities.
 cask "coconutbattery"
+cask "easydmg"
 cask "itsycal"
 cask "macs-fan-control"
-cask "session-manager-plugin"
-cask "easydmg"
-cask "utm"
 cask "rectangle"
+cask "stats"
+cask "utm"
+
+# Command-line integrations distributed as casks.
+cask "session-manager-plugin"
+cask "terraform-linters/tap/tflint", trusted: true
+
+# Fonts.
+cask "font-jetbrains-mono"
