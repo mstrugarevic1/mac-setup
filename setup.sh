@@ -79,6 +79,15 @@ elif ! command -v brew >/dev/null 2>&1; then
 fi
 printf '✅ Homebrew\n'
 
+printf '➡️ Oh My Zsh\n'
+oh_my_zsh_dir="$HOME/.oh-my-zsh"
+if [[ ! -e "$oh_my_zsh_dir" && ! -L "$oh_my_zsh_dir" ]]; then
+    git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git "$oh_my_zsh_dir"
+fi
+[[ -f "$oh_my_zsh_dir/oh-my-zsh.sh" ]] || { echo "Invalid Oh My Zsh installation: $oh_my_zsh_dir" >&2; exit 1; }
+unset oh_my_zsh_dir
+printf '✅ Oh My Zsh\n'
+
 printf '➡️ Dotfiles\n'
 link_file "$REPO_DIR/dotfiles/aliases.zsh" "$HOME/.aliases.zsh"
 link_file "$REPO_DIR/dotfiles/functions.zsh" "$HOME/.functions.zsh"

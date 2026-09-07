@@ -9,7 +9,7 @@ My personal macOS bootstrap script for setting up an Apple Silicon development w
 ## What it does
 
 - Installs command-line tools and applications from `Brewfile`.
-- Links tracked dotfiles and backs up existing targets.
+- Installs Oh My Zsh, links tracked dotfiles, and backs up existing targets.
 - Applies macOS preferences.
 - Configures Chrome bookmarks and extensions, and installs VSCodium extensions.
 
