@@ -64,11 +64,11 @@ case "$reply" in
     *) echo 'Setup cancelled.'; exit 0 ;;
 esac
 
-printf '\n→ Xcode Command Line Tools\n'
+printf '\n➡️ Xcode Command Line Tools\n'
 xcode-select -p >/dev/null 2>&1 || { echo 'Install Xcode Command Line Tools first: xcode-select --install' >&2; exit 1; }
-printf '✓ Xcode Command Line Tools\n'
+printf '✅ Xcode Command Line Tools\n'
 
-printf '→ Homebrew\n'
+printf '➡️ Homebrew\n'
 if [[ -x /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 elif [[ -x /usr/local/bin/brew ]]; then
@@ -77,9 +77,9 @@ elif ! command -v brew >/dev/null 2>&1; then
     echo 'Install Homebrew first: https://brew.sh' >&2
     exit 1
 fi
-printf '✓ Homebrew\n'
+printf '✅ Homebrew\n'
 
-printf '→ Dotfiles\n'
+printf '➡️ Dotfiles\n'
 link_file "$REPO_DIR/dotfiles/aliases.zsh" "$HOME/.aliases.zsh"
 link_file "$REPO_DIR/dotfiles/functions.zsh" "$HOME/.functions.zsh"
 link_file "$REPO_DIR/dotfiles/gitignore_global" "$HOME/.gitignore_global"
@@ -97,9 +97,9 @@ create_local_file "$REPO_DIR/local/ssh_config.local.example" "$HOME/.ssh/config.
 create_local_file "$REPO_DIR/local/vimrc.local.example" "$HOME/.vimrc.local"
 create_local_file "$REPO_DIR/local/tmux.conf.local.example" "$HOME/.tmux.conf.local"
 create_local_file "$REPO_DIR/local/kitty.local.conf.example" "$HOME/.config/kitty/local.conf"
-printf '✓ Dotfiles\n'
+printf '✅ Dotfiles\n'
 
-printf '→ Git\n'
+printf '➡️ Git\n'
 if [[ ! -e "$HOME/.gitconfig.local" && ! -L "$HOME/.gitconfig.local" ]]; then
     read -r -p 'Git name and surname: ' git_name
     read -r -p 'Git email: ' git_email
@@ -121,21 +121,21 @@ if [[ ! -e "$HOME/.gitconfig.local" && ! -L "$HOME/.gitconfig.local" ]]; then
     fi
 fi
 link_file "$REPO_DIR/dotfiles/gitconfig" "$HOME/.gitconfig"
-printf '✓ Git\n'
+printf '✅ Git\n'
 
 link_file "$REPO_DIR/dotfiles/zprofile" "$HOME/.zprofile"
 link_file "$REPO_DIR/dotfiles/zshrc" "$HOME/.zshrc"
 
-printf '→ macOS preferences\n'
+printf '➡️ macOS preferences\n'
 /bin/bash "$REPO_DIR/macos/defaults.sh"
-printf '✓ macOS preferences\n'
+printf '✅ macOS preferences\n'
 
-printf '→ Homebrew packages and applications\n'
+printf '➡️ Homebrew packages and applications\n'
 brew bundle --no-upgrade --file "$REPO_DIR/Brewfile"
-printf '✓ Homebrew packages and applications\n'
+printf '✅ Homebrew packages and applications\n'
 
 # Chrome reads initial preferences only on its first run.
-printf '→ Chrome bookmarks for first launch\n'
+printf '➡️ Chrome bookmarks for first launch\n'
 chrome_preferences_temp="$(mktemp)"
 jq -n --arg bookmarks "$REPO_DIR/chrome/bookmarks.html" \
     '{distribution: {import_bookmarks: false, import_bookmarks_from_file: $bookmarks}}' \
@@ -144,11 +144,11 @@ create_local_file "$chrome_preferences_temp" \
     "$HOME/Library/Application Support/Google/Chrome/Google Chrome Initial Preferences"
 rm -f "$chrome_preferences_temp"
 unset chrome_preferences_temp
-printf '✓ Chrome bookmark defaults prepared\n'
+printf '✅ Chrome bookmark defaults prepared\n'
 
 # Offer these Chrome Web Store extensions on the next Google Chrome launch.
 # Chrome asks the user to enable them, and respects later removal through its UI.
-printf '→ Chrome extensions\n'
+printf '➡️ Chrome extensions\n'
 chrome_extensions_dir="$HOME/Library/Application Support/Google/Chrome/External Extensions"
 mkdir -p "$chrome_extensions_dir"
 # Malwarebytes Browser Guard, uBlock Origin Lite, Dark Reader, and Chrome Capture.
@@ -163,9 +163,9 @@ for chrome_extension in \
     fi
 done
 unset chrome_extension chrome_extension_file chrome_extensions_dir
-printf '✓ Chrome extensions\n'
+printf '✅ Chrome extensions\n'
 
-printf '→ AI CLI wrapper\n'
+printf '➡️ AI CLI wrapper\n'
 ai_wrapper_dir="$HOME/.config/ai-cli-wrapper/scripts"
 ai_wrapper_file="$ai_wrapper_dir/ai-safe.sh"
 if [[ ! -e "$ai_wrapper_file" && ! -L "$ai_wrapper_file" ]]; then
@@ -193,9 +193,9 @@ if [[ ! -e "$ai_wrapper_file" && ! -L "$ai_wrapper_file" ]]; then
 fi
 [[ -f "$ai_wrapper_file" ]] || { echo "Invalid AI CLI wrapper path: $ai_wrapper_file" >&2; exit 1; }
 unset ai_wrapper_dir ai_wrapper_file ai_wrapper_temp ai_wrapper_hash
-printf '✓ AI CLI wrapper\n'
+printf '✅ AI CLI wrapper\n'
 
-printf '→ VSCodium extensions\n'
+printf '➡️ VSCodium extensions\n'
 for extension in \
     mhutchie.git-graph \
     hashicorp.terraform \
@@ -207,7 +207,7 @@ for extension in \
     GitHub.vscode-github-actions; do
     codium --install-extension "$extension"
 done
-printf '✓ VSCodium extensions\n'
+printf '✅ VSCodium extensions\n'
 
-printf '\n✓ Setup complete\n'
+printf '\n✅ Setup complete\n'
 printf 'Complete account, SSH, cloud, VPN, and application sign-ins as needed.\n'
