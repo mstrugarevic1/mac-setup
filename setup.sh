@@ -210,4 +210,5 @@ done
 printf '✅ VSCodium extensions\n'
 
 printf '\n✅ Setup complete\n'
-printf 'Complete account, SSH, cloud, VPN, and application sign-ins as needed.\n'
+printf 'Open a new terminal to load the shell configuration.\n'
+printf 'Complete sign-ins and approve requested macOS permissions when applications first launch.\n'

@@ -11,7 +11,7 @@ git_folder_reminder() {
 
     if [[ -n "$root" && "$root" != "$LAST_GIT_ROOT" ]]; then
         LAST_GIT_ROOT="$root"
-        printf "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔀  Git repository detected\n↻   Don't forget to run: git pull\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        printf "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔀  Git repository detected\n↻   Update safely with: git pull --ff-only\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
     elif [[ -z "$root" ]]; then
         unset LAST_GIT_ROOT
     fi

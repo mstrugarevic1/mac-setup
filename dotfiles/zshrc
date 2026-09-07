@@ -54,14 +54,16 @@ command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 
 # ── Prompt ─────────────────────────────────────────────────────
 
-# vcs_info is bundled with Zsh and supplies the current Git branch.
-autoload -Uz vcs_info add-zsh-hook
+# vcs_info is bundled with Zsh and supplies the current Git branch and operation.
+autoload -Uz colors vcs_info add-zsh-hook
+colors
 setopt prompt_subst
-zstyle ':vcs_info:git:*' formats ' %F{cyan}(%b)%f'
+zstyle ':vcs_info:git:*' formats ' %F{76}%B %b%%b%f'
+zstyle ':vcs_info:git:*' actionformats ' %F{76}%B %b|%a%%b%f'
 add-zsh-hook precmd vcs_info
 
-# user@host:working-directory (git-branch) followed by % or # for root.
-PROMPT='%F{green}%n@%m%f:%F{blue}%~%f${vcs_info_msg_0_} %# '
+# user@host working-directory (git-branch), followed by an arrow on a new line.
+PROMPT=$'%F{250}%B%n%b%f@%F{108}%m%f %F{67}%~%f${vcs_info_msg_0_}\n%F{130}%B➜%b%f '
 
 
 # ── Additional configuration ─────────────────────────────────────
