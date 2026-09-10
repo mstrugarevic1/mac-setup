@@ -135,6 +135,12 @@ printf '✅ Git\n'
 link_file "$REPO_DIR/dotfiles/zprofile" "$HOME/.zprofile"
 link_file "$REPO_DIR/dotfiles/zshrc" "$HOME/.zshrc"
 
+printf '➡️ Touch ID for sudo\n'
+[[ -e /etc/pam.d/sudo_local ]] || sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
+sudo sed -i '' 's/^#auth       sufficient     pam_tid\.so$/auth       sufficient     pam_tid.so/' /etc/pam.d/sudo_local
+grep -Eq '^auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so' /etc/pam.d/sudo_local
+printf '✅ Touch ID for sudo\n'
+
 printf '➡️ macOS preferences\n'
 /bin/bash "$REPO_DIR/macos/defaults.sh"
 printf '✅ macOS preferences\n'
@@ -217,6 +223,10 @@ for extension in \
     codium --install-extension "$extension"
 done
 printf '✅ VSCodium extensions\n'
+
+if [[ "${SHELL:-}" != /bin/zsh ]]; then
+    chsh -s /bin/zsh
+fi
 
 printf '\n✅ Setup complete\n'
 printf 'Open a new terminal to load the shell configuration.\n'
