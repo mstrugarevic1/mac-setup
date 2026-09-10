@@ -9,9 +9,18 @@ My personal macOS bootstrap script for setting up an Apple Silicon development w
 ## What it does
 
 - Installs command-line tools and applications from `Brewfile`.
-- Installs Oh My Zsh, links tracked dotfiles, and backs up existing targets.
+- Installs Oh My Zsh, links tracked dotfiles, backs up existing targets, and sets zsh as the login shell.
 - Applies macOS preferences.
-- Configures Chrome bookmarks and extensions, and installs VSCodium extensions.
+- Enables Touch ID authentication for `sudo` when supported.
+- Configures Chrome bookmarks and offers extensions on the next launch; they can be declined or removed in Chrome.
+- Downloads `ai-safe.sh` from a pinned commit and verifies its SHA-256 checksum.
+- Installs VSCodium extensions.
+
+## Requirements
+
+This project targets macOS 26 (Tahoe) on Apple Silicon. The Touch ID step is skipped automatically on older macOS versions that do not provide the required PAM template.
+
+The script is safe to rerun. Run it as your normal user; it requests the sudo password only while configuring Touch ID authentication.
 
 ## Usage
 
@@ -38,4 +47,4 @@ cd ~/.mac-setup
 ./setup.sh
 ```
 
-Run the script as your normal user, not with `sudo`. It is intended for Apple Silicon Macs.
+Run the script as your normal user, not with `sudo`.

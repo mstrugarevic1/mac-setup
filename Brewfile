@@ -36,7 +36,9 @@ brew "yaml-language-server"
 
 # Kubernetes and GitOps tools.
 brew "argocd"
+brew "dive"
 brew "eksctl"
+brew "fluxcd/tap/flux"
 brew "helm"
 brew "helmfile"
 brew "istioctl"
@@ -45,9 +47,11 @@ brew "kind"
 brew "krew"
 brew "kubecolor"
 brew "kubeconform"
-brew "kubectx"
 brew "kubectl"
+brew "kubectx"
+brew "kubent"
 brew "kustomize"
+brew "popeye"
 brew "stern"
 
 # Cloud and infrastructure-as-code tools.
@@ -57,6 +61,7 @@ brew "aws-vault"
 brew "awscli"
 brew "hashicorp/tap/terraform", trusted: true
 brew "hashicorp/tap/vault", trusted: true
+brew "infracost"
 brew "opentofu"
 brew "terraform-docs"
 
