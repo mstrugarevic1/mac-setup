@@ -11,54 +11,54 @@ AI_CLI_WRAPPER_SHA256="27048ab978bf9f8a4ee80ace1732678f4611a700fa98dd4bc0641fcf1
 
 # Leave correct links alone and back up anything else before linking it.
 link_file() {
-	local source=$1 destination=$2 backup counter=1
-	[[ -e "$source" ]] || {
-		printf 'Missing repository file: %s\n' "$source" >&2
-		return 1
-	}
-	mkdir -p "$(dirname "$destination")"
+    local source=$1 destination=$2 backup counter=1
+    [[ -e "$source" ]] || {
+        printf 'Missing repository file: %s\n' "$source" >&2
+        return 1
+    }
+    mkdir -p "$(dirname "$destination")"
 
-	if [[ -L "$destination" && "$(readlink "$destination")" == "$source" ]]; then
-		return 0
-	fi
+    if [[ -L "$destination" && "$(readlink "$destination")" == "$source" ]]; then
+        return 0
+    fi
 
-	if [[ -e "$destination" || -L "$destination" ]]; then
-		backup="${destination}.backup.${BACKUP_SUFFIX}"
-		while [[ -e "$backup" || -L "$backup" ]]; do
-			backup="${destination}.backup.${BACKUP_SUFFIX}.${counter}"
-			counter=$((counter + 1))
-		done
-		mv -n "$destination" "$backup"
-		[[ ! -e "$destination" && ! -L "$destination" ]] || {
-			printf 'Could not safely back up %s\n' "$destination" >&2
-			return 1
-		}
-	fi
+    if [[ -e "$destination" || -L "$destination" ]]; then
+        backup="${destination}.backup.${BACKUP_SUFFIX}"
+        while [[ -e "$backup" || -L "$backup" ]]; do
+            backup="${destination}.backup.${BACKUP_SUFFIX}.${counter}"
+            counter=$((counter + 1))
+        done
+        mv -n "$destination" "$backup"
+        [[ ! -e "$destination" && ! -L "$destination" ]] || {
+            printf 'Could not safely back up %s\n' "$destination" >&2
+            return 1
+        }
+    fi
 
-	ln -s "$source" "$destination"
+    ln -s "$source" "$destination"
 }
 
 # Machine-local files are created once and never overwritten.
 create_local_file() {
-	local source=$1 destination=$2
-	if [[ ! -e "$destination" && ! -L "$destination" ]]; then
-		mkdir -p "$(dirname "$destination")"
-		install -m 600 "$source" "$destination"
-	fi
+    local source=$1 destination=$2
+    if [[ ! -e "$destination" && ! -L "$destination" ]]; then
+        mkdir -p "$(dirname "$destination")"
+        install -m 600 "$source" "$destination"
+    fi
 }
 
 if (($#)); then
-	echo 'Usage: ./setup.sh' >&2
-	exit 2
+    echo 'Usage: ./setup.sh' >&2
+    exit 2
 fi
 
 [[ "$(uname -s)" == Darwin ]] || {
-	echo 'This setup supports macOS only.' >&2
-	exit 1
+    echo 'This setup supports macOS only.' >&2
+    exit 1
 }
 [[ $EUID -ne 0 ]] || {
-	echo 'Run setup.sh as your normal user, never with sudo.' >&2
-	exit 1
+    echo 'Run setup.sh as your normal user, never with sudo.' >&2
+    exit 1
 }
 
 printf '\n################################################################\n'
@@ -71,37 +71,37 @@ read -r reply
 case "$reply" in
 y | Y | yes | YES | d | D | da | DA) ;;
 *)
-	echo 'Setup cancelled.'
-	exit 0
-	;;
+    echo 'Setup cancelled.'
+    exit 0
+    ;;
 esac
 
 printf '\n➡️ Xcode Command Line Tools\n'
 xcode-select -p >/dev/null 2>&1 || {
-	echo 'Install Xcode Command Line Tools first: xcode-select --install' >&2
-	exit 1
+    echo 'Install Xcode Command Line Tools first: xcode-select --install' >&2
+    exit 1
 }
 printf '✅ Xcode Command Line Tools\n'
 
 printf '➡️ Homebrew\n'
 if [[ -x /opt/homebrew/bin/brew ]]; then
-	eval "$(/opt/homebrew/bin/brew shellenv)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 elif [[ -x /usr/local/bin/brew ]]; then
-	eval "$(/usr/local/bin/brew shellenv)"
+    eval "$(/usr/local/bin/brew shellenv)"
 elif ! command -v brew >/dev/null 2>&1; then
-	echo 'Install Homebrew first: https://brew.sh' >&2
-	exit 1
+    echo 'Install Homebrew first: https://brew.sh' >&2
+    exit 1
 fi
 printf '✅ Homebrew\n'
 
 printf '➡️ Oh My Zsh\n'
 oh_my_zsh_dir="$HOME/.oh-my-zsh"
 if [[ ! -e "$oh_my_zsh_dir" && ! -L "$oh_my_zsh_dir" ]]; then
-	git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git "$oh_my_zsh_dir"
+    git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git "$oh_my_zsh_dir"
 fi
 [[ -f "$oh_my_zsh_dir/oh-my-zsh.sh" ]] || {
-	echo "Invalid Oh My Zsh installation: $oh_my_zsh_dir" >&2
-	exit 1
+    echo "Invalid Oh My Zsh installation: $oh_my_zsh_dir" >&2
+    exit 1
 }
 unset oh_my_zsh_dir
 printf '✅ Oh My Zsh\n'
@@ -128,30 +128,30 @@ printf '✅ Dotfiles\n'
 
 printf '➡️ Git\n'
 if [[ ! -e "$HOME/.gitconfig.local" && ! -L "$HOME/.gitconfig.local" ]]; then
-	read -r -p 'Git name and surname: ' git_name
-	read -r -p 'Git email: ' git_email
-	[[ -n "$git_name" ]] || {
-		echo 'Git name cannot be empty.' >&2
-		exit 1
-	}
-	[[ "$git_email" == *@*.* ]] || {
-		echo 'Enter a valid Git email address.' >&2
-		exit 1
-	}
+    read -r -p 'Git name and surname: ' git_name
+    read -r -p 'Git email: ' git_email
+    [[ -n "$git_name" ]] || {
+        echo 'Git name cannot be empty.' >&2
+        exit 1
+    }
+    [[ "$git_email" == *@*.* ]] || {
+        echo 'Enter a valid Git email address.' >&2
+        exit 1
+    }
 
-	temp_file="$(mktemp "$HOME/.gitconfig.local.tmp.XXXXXX")"
-	if ! install -m 600 "$REPO_DIR/local/gitconfig.local.example" "$temp_file" ||
-		! git config --file "$temp_file" user.name "$git_name" ||
-		! git config --file "$temp_file" user.email "$git_email"; then
-		rm -f "$temp_file"
-		exit 1
-	fi
-	mv -n "$temp_file" "$HOME/.gitconfig.local"
-	if [[ -e "$temp_file" ]]; then
-		rm -f "$temp_file"
-		echo "$HOME/.gitconfig.local appeared during setup and was not overwritten." >&2
-		exit 1
-	fi
+    temp_file="$(mktemp "$HOME/.gitconfig.local.tmp.XXXXXX")"
+    if ! install -m 600 "$REPO_DIR/local/gitconfig.local.example" "$temp_file" ||
+        ! git config --file "$temp_file" user.name "$git_name" ||
+        ! git config --file "$temp_file" user.email "$git_email"; then
+        rm -f "$temp_file"
+        exit 1
+    fi
+    mv -n "$temp_file" "$HOME/.gitconfig.local"
+    if [[ -e "$temp_file" ]]; then
+        rm -f "$temp_file"
+        echo "$HOME/.gitconfig.local appeared during setup and was not overwritten." >&2
+        exit 1
+    fi
 fi
 link_file "$REPO_DIR/dotfiles/gitconfig" "$HOME/.gitconfig"
 printf '✅ Git\n'
@@ -165,25 +165,25 @@ link_file "$REPO_DIR/dotfiles/zshrc" "$HOME/.zshrc"
 printf '➡️ Touch ID for sudo\n'
 touch_id_line='auth       sufficient     pam_tid.so'
 if grep -Eq '^auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so' /etc/pam.d/sudo_local 2>/dev/null; then
-	printf '✅ Touch ID for sudo (already configured)\n'
+    printf '✅ Touch ID for sudo (already configured)\n'
 elif [[ -e /etc/pam.d/sudo_local.template ]]; then
-	printf 'Configuring Touch ID for sudo needs administrator rights.\n'
-	if [[ ! -e /etc/pam.d/sudo_local ]]; then
-		sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
-	fi
-	# Uncomment an existing pam_tid line if present, otherwise append one.
-	if grep -Eq '^#+[[:space:]]*auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so' /etc/pam.d/sudo_local; then
-		sudo sed -i '' -E 's/^#+[[:space:]]*(auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so)/\1/' /etc/pam.d/sudo_local
-	else
-		printf '%s\n' "$touch_id_line" | sudo tee -a /etc/pam.d/sudo_local >/dev/null
-	fi
-	if grep -Eq '^auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so' /etc/pam.d/sudo_local; then
-		printf '✅ Touch ID for sudo\n'
-	else
-		printf '⚠️  Could not enable Touch ID for sudo; configure it manually if you want it.\n' >&2
-	fi
+    printf 'Configuring Touch ID for sudo needs administrator rights.\n'
+    if [[ ! -e /etc/pam.d/sudo_local ]]; then
+        sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
+    fi
+    # Uncomment an existing pam_tid line if present, otherwise append one.
+    if grep -Eq '^#+[[:space:]]*auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so' /etc/pam.d/sudo_local; then
+        sudo sed -i '' -E 's/^#+[[:space:]]*(auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so)/\1/' /etc/pam.d/sudo_local
+    else
+        printf '%s\n' "$touch_id_line" | sudo tee -a /etc/pam.d/sudo_local >/dev/null
+    fi
+    if grep -Eq '^auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so' /etc/pam.d/sudo_local; then
+        printf '✅ Touch ID for sudo\n'
+    else
+        printf '⚠️  Could not enable Touch ID for sudo; configure it manually if you want it.\n' >&2
+    fi
 else
-	printf '⚠️  Touch ID for sudo is unavailable on this macOS version; skipping.\n' >&2
+    printf '⚠️  Touch ID for sudo is unavailable on this macOS version; skipping.\n' >&2
 fi
 unset touch_id_line
 
@@ -199,10 +199,10 @@ printf '✅ Homebrew packages and applications\n'
 printf '➡️ Chrome bookmarks for first launch\n'
 chrome_preferences_temp="$(mktemp)"
 jq -n --arg bookmarks "$REPO_DIR/chrome/bookmarks.html" \
-	'{distribution: {import_bookmarks: false, import_bookmarks_from_file: $bookmarks}}' \
-	>"$chrome_preferences_temp"
+    '{distribution: {import_bookmarks: false, import_bookmarks_from_file: $bookmarks}}' \
+    >"$chrome_preferences_temp"
 create_local_file "$chrome_preferences_temp" \
-	"$HOME/Library/Application Support/Google/Chrome/Google Chrome Initial Preferences"
+    "$HOME/Library/Application Support/Google/Chrome/Google Chrome Initial Preferences"
 rm -f "$chrome_preferences_temp"
 unset chrome_preferences_temp
 printf '✅ Chrome bookmark defaults prepared\n'
@@ -214,14 +214,14 @@ chrome_extensions_dir="$HOME/Library/Application Support/Google/Chrome/External 
 mkdir -p "$chrome_extensions_dir"
 # Malwarebytes Browser Guard, uBlock Origin Lite, Dark Reader, and Chrome Capture.
 for chrome_extension in \
-	ihcjicgdanjaechkgeegckofjjedodee \
-	ddkjiahejlhfcafbddmgiahcphecmpfh \
-	eimadpbcbfnmbkopoojfekhnkhdbieeh \
-	ggaabchcecdbomdcnbahdfddfikjmphe; do
-	chrome_extension_file="$chrome_extensions_dir/$chrome_extension.json"
-	if [[ ! -e "$chrome_extension_file" && ! -L "$chrome_extension_file" ]]; then
-		printf '%s\n' '{"external_update_url":"https://clients2.google.com/service/update2/crx"}' >"$chrome_extension_file"
-	fi
+    ihcjicgdanjaechkgeegckofjjedodee \
+    ddkjiahejlhfcafbddmgiahcphecmpfh \
+    eimadpbcbfnmbkopoojfekhnkhdbieeh \
+    ggaabchcecdbomdcnbahdfddfikjmphe; do
+    chrome_extension_file="$chrome_extensions_dir/$chrome_extension.json"
+    if [[ ! -e "$chrome_extension_file" && ! -L "$chrome_extension_file" ]]; then
+        printf '%s\n' '{"external_update_url":"https://clients2.google.com/service/update2/crx"}' >"$chrome_extension_file"
+    fi
 done
 unset chrome_extension chrome_extension_file chrome_extensions_dir
 printf '✅ Chrome extensions\n'
@@ -230,46 +230,46 @@ printf '➡️ AI CLI wrapper\n'
 ai_wrapper_dir="$HOME/.config/ai-cli-wrapper/scripts"
 ai_wrapper_file="$ai_wrapper_dir/ai-safe.sh"
 if [[ ! -e "$ai_wrapper_file" && ! -L "$ai_wrapper_file" ]]; then
-	mkdir -p "$ai_wrapper_dir"
-	ai_wrapper_temp="$(mktemp "$ai_wrapper_dir/ai-safe.sh.tmp.XXXXXX")"
-	if ! /usr/bin/curl --fail --location --silent --show-error \
-		"https://raw.githubusercontent.com/mstrugarevic1/ai-cli-wrapper/$AI_CLI_WRAPPER_COMMIT/scripts/ai-safe.sh" \
-		--output "$ai_wrapper_temp"; then
-		rm -f "$ai_wrapper_temp"
-		exit 1
-	fi
-	ai_wrapper_hash="$(/usr/bin/shasum -a 256 "$ai_wrapper_temp")"
-	ai_wrapper_hash="${ai_wrapper_hash%% *}"
-	if [[ "$ai_wrapper_hash" != "$AI_CLI_WRAPPER_SHA256" ]]; then
-		rm -f "$ai_wrapper_temp"
-		echo 'AI CLI wrapper checksum verification failed.' >&2
-		exit 1
-	fi
-	mv -n "$ai_wrapper_temp" "$ai_wrapper_file"
-	if [[ -e "$ai_wrapper_temp" ]]; then
-		rm -f "$ai_wrapper_temp"
-		echo "$ai_wrapper_file appeared during setup and was not overwritten." >&2
-		exit 1
-	fi
+    mkdir -p "$ai_wrapper_dir"
+    ai_wrapper_temp="$(mktemp "$ai_wrapper_dir/ai-safe.sh.tmp.XXXXXX")"
+    if ! /usr/bin/curl --fail --location --silent --show-error \
+        "https://raw.githubusercontent.com/mstrugarevic1/ai-cli-wrapper/$AI_CLI_WRAPPER_COMMIT/scripts/ai-safe.sh" \
+        --output "$ai_wrapper_temp"; then
+        rm -f "$ai_wrapper_temp"
+        exit 1
+    fi
+    ai_wrapper_hash="$(/usr/bin/shasum -a 256 "$ai_wrapper_temp")"
+    ai_wrapper_hash="${ai_wrapper_hash%% *}"
+    if [[ "$ai_wrapper_hash" != "$AI_CLI_WRAPPER_SHA256" ]]; then
+        rm -f "$ai_wrapper_temp"
+        echo 'AI CLI wrapper checksum verification failed.' >&2
+        exit 1
+    fi
+    mv -n "$ai_wrapper_temp" "$ai_wrapper_file"
+    if [[ -e "$ai_wrapper_temp" ]]; then
+        rm -f "$ai_wrapper_temp"
+        echo "$ai_wrapper_file appeared during setup and was not overwritten." >&2
+        exit 1
+    fi
 fi
 [[ -f "$ai_wrapper_file" ]] || {
-	echo "Invalid AI CLI wrapper path: $ai_wrapper_file" >&2
-	exit 1
+    echo "Invalid AI CLI wrapper path: $ai_wrapper_file" >&2
+    exit 1
 }
 unset ai_wrapper_dir ai_wrapper_file ai_wrapper_temp ai_wrapper_hash
 printf '✅ AI CLI wrapper\n'
 
 printf '➡️ VSCodium extensions\n'
 for extension in \
-	mhutchie.git-graph \
-	hashicorp.terraform \
-	redhat.vscode-yaml \
-	ms-python.python \
-	timonwong.shellcheck \
-	qwtel.sqlite-viewer \
-	shd101wyy.markdown-preview-enhanced \
-	GitHub.vscode-github-actions; do
-	codium --install-extension "$extension"
+    mhutchie.git-graph \
+    hashicorp.terraform \
+    redhat.vscode-yaml \
+    ms-python.python \
+    timonwong.shellcheck \
+    qwtel.sqlite-viewer \
+    shd101wyy.markdown-preview-enhanced \
+    GitHub.vscode-github-actions; do
+    codium --install-extension "$extension"
 done
 printf '✅ VSCodium extensions\n'
 
@@ -278,7 +278,7 @@ printf '✅ VSCodium extensions\n'
 printf '➡️ Login shell\n'
 login_shell="$(dscl . -read "$HOME" UserShell 2>/dev/null | awk '{print $2}')"
 if [[ "$login_shell" != /bin/zsh ]]; then
-	chsh -s /bin/zsh
+    chsh -s /bin/zsh
 fi
 unset login_shell
 printf '✅ Login shell\n'
