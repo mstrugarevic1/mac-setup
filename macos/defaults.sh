@@ -10,6 +10,8 @@ mkdir -p "$screenshots_dir"
 # Appearance
 # Use the system-wide dark interface for applications that follow macOS appearance.
 defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
+# Keep scroll bars visible instead of showing them only while scrolling.
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 
 # Finder
 # NSGlobalDomain applies this extension setting across macOS applications.
