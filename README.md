@@ -4,7 +4,7 @@
 
 # mac-setup
 
-My personal macOS bootstrap script for setting up an Apple Silicon development workstation.
+My personal macOS bootstrap script for setting up an Apple Silicon DevOps workstation.
 
 ## What it does
 
