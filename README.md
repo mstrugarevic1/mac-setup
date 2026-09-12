@@ -10,6 +10,7 @@ My personal macOS bootstrap script for setting up an Apple Silicon development w
 
 - Installs command-line tools and applications from `Brewfile`.
 - Installs Oh My Zsh, links tracked dotfiles, backs up existing targets, and sets zsh as the login shell.
+- Links the `bin/` utility scripts for DevOps work into `~/.local/bin`.
 - Applies macOS preferences.
 - Enables Touch ID authentication for `sudo` when supported.
 - Configures Chrome bookmarks and offers extensions on the next launch; they can be declined or removed in Chrome.

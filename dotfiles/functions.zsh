@@ -16,3 +16,23 @@ git_folder_reminder() {
         unset LAST_GIT_ROOT
     fi
 }
+
+# Select an AWS profile with fzf and refresh the SSO session when it expired.
+# Pass a name to skip the picker, for example `aws-switch staging`.
+# This stays a function because it exports AWS_PROFILE into the current shell.
+aws-switch() {
+    local profile
+    if [[ -n "$1" ]]; then
+        profile="$1"
+    else
+        profile="$(aws configure list-profiles | sort \
+            | fzf --prompt='AWS profile > ' --height=40% --reverse \
+                  --header="current: ${AWS_PROFILE:-none}")" || return
+    fi
+    [[ -n "$profile" ]] || return
+
+    export AWS_PROFILE="$profile"
+    echo "AWS_PROFILE=$AWS_PROFILE"
+
+    aws sts get-caller-identity >/dev/null 2>&1 || aws sso login
+}

@@ -119,6 +119,16 @@ mkdir -p "$HOME/.ssh"
 chmod 700 "$HOME/.ssh"
 link_file "$REPO_DIR/dotfiles/ssh_config" "$HOME/.ssh/config"
 
+# Utility scripts are linked without the .sh suffix into ~/.local/bin, which
+# dotfiles/zshrc already puts on PATH.
+for script in "$REPO_DIR"/bin/*.sh; do
+    # Bash 3.2 leaves the pattern unexpanded when bin/ holds no scripts.
+    [[ -e "$script" ]] || continue
+    script_name="$(basename "$script" .sh)"
+    link_file "$script" "$HOME/.local/bin/$script_name"
+done
+unset script script_name
+
 create_local_file "$REPO_DIR/local/zshrc.local.example" "$HOME/.zshrc.local"
 create_local_file "$REPO_DIR/local/ssh_config.local.example" "$HOME/.ssh/config.local"
 create_local_file "$REPO_DIR/local/vimrc.local.example" "$HOME/.vimrc.local"

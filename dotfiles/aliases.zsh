@@ -29,6 +29,10 @@ alias k='kubectl'
 alias kgp='kubectl get pods'
 alias kgs='kubectl get services'
 alias kctx='kubectl config current-context'
+# kubectx and kubens pick a context or namespace; both show an fzf picker when
+# called without arguments.
+alias ktx='kubectx'
+alias kns='kubens'
 alias tf='terraform'
 alias tff='terraform fmt -recursive'
 alias tfv='terraform validate'
